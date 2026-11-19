@@ -1,0 +1,308 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\smin}{s_{\min}}
+\DeclareMathOperator{\diag}{diag}
+
+\title{The least singular value of polynomials in Ginibre matrices at the constant term}
+\author{Yitzchak Shmalo\\
+Einstein Institute of Mathematics, The Hebrew University of Jerusalem\\
+Givat Ram, Jerusalem, Israel\\
+\texttt{yitzchak.shmalo@gmail.com}}
+\date{19 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $P$ be a nonconstant polynomial in $k$ noncommuting variables and let $X_1,\dots,X_k$ be independent $N\times N$ complex Ginibre matrices. We prove that the least singular value of $P(X)-P(0)I_N$ satisfies $\Prob\{\smin\le t\}\le C(N^{\kappa}t^b+e^{-cN})$ for all $t>0$ and all large $N$, with constants depending only on $P$. Han proved this bound at every $z\ne P(0)$ and asked whether it holds at $z=P(0)$; Collins, Kitagawa, Miyagawa, Yuan and Zhong answered this when $P$ is not constant on $\C^k$. The polynomials left open are those that are constant on $\C^k$; in degree two they are covered by a theorem of Cook, Guionnet and Husson, and an example of degree three is $x_1^2x_2-x_2x_1^2$. For these polynomials we use a tuple of $d\times d$ matrices, $d=\deg P$, at which $P-P(0)$ is invertible. Sizes $N=M+s$ with $d\mid M$ and $d\le s\le 2d-1$ are treated by bounding the determinant of a Schur complement of bounded size with the Carbery--Wright inequality.
+\end{abstract}
+
+\noindent\textit{Mathematics Subject Classification (2020):} 60B20, 15B52, 46L54.\\
+\textit{Keywords:} least singular value, Ginibre matrices, noncommutative polynomials, Brown measure, linearization.
+
+\section{Introduction}
+
+Let $P\in\C\langle x_1,\dots,x_k\rangle$ be a noncommutative polynomial without adjoints, and let $X_1,\dots,X_k$ be independent normalized complex Ginibre matrices of size $N$, that is, $N\times N$ matrices with independent centred circular Gaussian entries of variance $1/N$. Han \cite{Han1} proved that the empirical spectral distribution of $P(X_1,\dots,X_k)$ converges to the Brown measure of $P$ evaluated at free circular elements. As in other results on non-Hermitian spectra since Girko, and in the regularization of \'Sniady \cite{Sn}, the main random matrix input is a lower tail bound for least singular values. Han's Theorem~1.3 states that for every $z\ne P(0)$ there are constants with
+\begin{equation}\label{eq:han}
+\Prob\{\smin(P(X)-zI_N)\le t\}\le C\bigl(N^{a}t^{b}+e^{-cN}\bigr)\qquad(t>0,\ N\ge N_0),
+\end{equation}
+and his Question~1.6 asks whether \eqref{eq:han} holds at $z=P(0)$ \cite{Han1}. For a single Ginibre matrix the distribution of the least singular value is explicit \cite{Ed}, and invertibility of general square random matrices goes back to \cite{RV}; for polynomials the difficulty is algebraic, since $P(X)-P(0)$ has no deterministic part to anchor an estimate. Cook, Guionnet and Husson \cite{CGH} proved a bound uniform in $z$ for quadratic polynomials, which answers the question in degree two.
+
+Collins, Kitagawa, Miyagawa, Yuan and Zhong \cite{CKMYZ} proved \eqref{eq:han} at every $z$ for which some scalar tuple $c\in\C^k$ has $P(c)\ne z$ \cite[Corollary~3.8]{CKMYZ}. Their proof evaluates a linearization of $P-z$ at the scalar point $c$, where its determinant equals $P(c)-z\ne0$, multiplies by the inverse of this fixed matrix so that the coefficient of $I_N$ becomes the identity, and applies an estimate for tensorized Ginibre matrices with bounded deterministic means \cite[Theorem~3.4]{CKMYZ}, stated below as \cref{thm:ckmyz}. This answers Han's question unless $P$ is constant on $\C^k$, in which case the value $z=P(0)$ is not treated \cite[Remark~3.9]{CKMYZ}. In degree two these polynomials, such as the commutator $x_1x_2-x_2x_1$, are covered by \cite{CGH}; an example of degree three is $x_1^2x_2-x_2x_1^2$. In the setting with adjoints and non-Gaussian entries, Han \cite{Han2} proved Brown measure convergence, again with least singular value bounds at $z\ne P(0)$, and observed that with adjoints the shift $z=P(0)$ cannot be admitted in general: for $P(x,x^*)=x-x^*$ and real entries, $P(X,X^T)$ is skew-symmetric and hence singular in every odd dimension \cite[Remark~2.2]{Han2}.
+
+The following theorem holds for every nonconstant $P$, and is new for the polynomials of degree at least three that are constant on $\C^k$.
+
+\begin{theorem}\label{thm:main}
+Let $P\in\C\langle x_1,\dots,x_k\rangle$ be nonconstant and put $Q=P-P(0)$. Let $X_1,\dots,X_k$ be independent normalized complex Ginibre matrices of size $N$. There are positive constants $\kappa,b,c,C$ and an integer $N_0$, depending only on $P$, such that for all $N\ge N_0$ and all $t>0$,
+\begin{equation}\label{eq:main}
+\Prob\{\smin(Q(X))\le t\}\le C\bigl(N^{\kappa}t^{b}+e^{-cN}\bigr).
+\end{equation}
+\end{theorem}
+
+Taking $t=N^{-\beta}$ with $b\beta>\kappa+\delta$ gives $\smin(P(X)-P(0)I_N)>N^{-\beta}$ with probability at least $1-C'N^{-\delta}$, where $C'$ depends only on $P$ and $\delta$. Together with \eqref{eq:han}, the least singular value of $P(X)-zI_N$ has a polynomial lower tail at every $z\in\C$, though not uniformly in $z$. The proof gives $b=1/(4md(H+1))$ with $H=m(2d-1)$, where $d=\deg P$ and $m$ is the size of the linearization of \cref{sec:lin}, and $\kappa=\max\{\eta/2,1/4\}$, where $\eta$ is the exponent of \cref{thm:ckmyz} for coefficients in $M_{md}(\C)$.
+
+The idea is the following. A scalar point $c$ with $Q(c)\ne0$ does not exist when $Q$ vanishes on scalars, but a matrix point does. In \cref{sec:point} we write down, for every $s\ge d=\deg Q$, an explicit $s\times s$ tuple $T$ with $\det Q(T)\ne0$, built from the cyclic shift with diagonal weights; for $s>d/2$ such a tuple also exists by classical results on polynomial identities. If $d$ divides $N$, one may view each $X_i$ as a $d\times d$ array of Ginibre blocks; then $T$ plays the part of the scalar point, and the argument of \cite[Corollary~3.8]{CKMYZ} applies with $d\times d$ matrix coefficients (\cref{sec:divisible}). For the other sizes we split $N=M+s$ with $d\mid M$ and $d\le s\le 2d-1$. The entries of the upper left $M\times M$ blocks have variance $1/N$ instead of $1/M$, and the two Gaussian laws are compared through the second moment of their density ratio (\cref{sec:variance}). The remaining rows and columns are handled by a Carbery--Wright small-ball estimate for the determinant of a Schur complement (\cref{sec:border}), whose conditional mean is $\det Q$ evaluated on the lower right $s\times s$ blocks. The explicit tuple needs $s\ge d$. Some lower bound on $s$ is necessary, since on $1\times1$ inputs the determinant of a commutator vanishes identically.
+
+The complex Gaussian law is used in three places: in \cite[Theorem~3.4]{CKMYZ}, in the circular symmetry that computes the conditional mean of the Schur complement determinant, and in the comparison of the two variances. The absence of adjoints is used in \cref{sec:point} and in the conditional mean (\cref{rem:adjoints}).
+
+\section{\texorpdfstring{A matrix point at which $Q$ is invertible}{A matrix point at which Q is invertible}}\label{sec:point}
+
+Write $d=\deg Q\ge1$ and let $Q_d$ be the homogeneous part of $Q$ of degree $d$; it is nonzero.
+
+\begin{lemma}\label{lem:point}
+For every integer $s\ge d$, the polynomial $Z\mapsto\det Q(Z)$ in the entries of a tuple $Z=(Z_1,\dots,Z_k)$ of $s\times s$ matrices is not identically zero. In particular, for every $N\ge d$, the matrix $Q(X)$ is invertible almost surely.
+\end{lemma}
+
+For $s>d/2$ the first assertion also follows from classical results. By the theorem of Amitsur and Levitzki, $M_s(\C)$ satisfies no polynomial identity of degree less than $2s$ \cite[Corollary~V.5.3]{Ar}, so $Q$ does not vanish on generic $s\times s$ matrices. By a theorem of Amitsur the algebra they generate is a domain \cite[Theorem~V.10.4]{Ar}, so by Posner's theorem \cite[Theorem~V.8.1]{Ar} its central localization is a division algebra. For $k\ge2$ the centre consists of scalar matrices, so this division algebra lies in the matrices over the field of rational functions of the entries, $Q(Z)$ is invertible there, and $\det Q(Z)\ne0$. For $k=1$, $\det Q(Z_1)=\prod_jQ(\lambda_j)$ over the eigenvalues $\lambda_j$ of $Z_1$, which is nonzero for generic $Z_1$. The proof below gives an explicit tuple for $s\ge d$.
+
+\begin{proof}
+Index rows and columns by $\Z/s$ and let $S$ be the cyclic shift with $S_{r,r+1}=1$ and all other entries $0$. For each letter $i$ put $T_i=\diag(a_{i,0},\dots,a_{i,s-1})\,S$, where the $a_{i,r}$ are commuting indeterminates. Since $S\,\diag(y_r)_{r\in\Z/s}=\diag(y_{r+1})_{r\in\Z/s}\,S$, a word $x_{i_1}\cdots x_{i_d}$ evaluates to
+\[
+T_{i_1}\cdots T_{i_d}=\diag\bigl(a_{i_1,r}a_{i_2,r+1}\cdots a_{i_d,r+d-1}\bigr)_{r\in\Z/s}\,S^d .
+\]
+Because $s\ge d$, the $d$ indices from $r$ to $r+d-1$ are distinct modulo $s$, so the monomial $a_{i_1,r}\cdots a_{i_d,r+d-1}$ determines the word. Hence $Q_d(T)=\diag(f_0,\dots,f_{s-1})S^d$ with every $f_r$ a nonzero polynomial, and $\det Q_d(T)=\pm\prod_rf_r\ne0$ as a polynomial. Specialize the $a_{i,r}$ to complex numbers at which $\det Q_d(T)\ne0$. For $u\in\C$, $\det Q(uT)$ is a polynomial in $u$ of degree at most $ds$ whose coefficient of $u^{ds}$ is $\det Q_d(T)\ne0$, so $\det Q(uT)\ne0$ for all but finitely many $u$. The last statement follows because the entries of $X$ have a joint density.
+\end{proof}
+
+\section{Linearization}\label{sec:lin}
+
+We use the word-chain linearization of \cite[Lemma~2.13]{CKMYZ}, and need two of its properties, which we verify for the following explicit form. Write $Q=Q_{\le1}+\sum_wa_ww$, where $Q_{\le1}=\sum_i a_ix_i$ is the linear part (the constant term of $Q$ is $0$) and the sum runs over words $w=x_{i_1}\cdots x_{i_l}$ of length $l\ge2$. For such a word let $U_w$ be the $(l-1)\times(l-1)$ block upper triangular matrix with identity blocks on the diagonal and $-x_{i_2},\dots,-x_{i_{l-1}}$ on the block superdiagonal; let $u_w$ be the block row with first entry $a_wx_{i_1}$ and $v_w$ the block column with last entry $x_{i_l}$, all other entries zero. Since $U_w=I-\mathcal N$ with $\mathcal N$ nilpotent, $U_w^{-1}=\sum_{j\ge0}\mathcal N^j$, and its upper right block is $x_{i_2}\cdots x_{i_{l-1}}$, so $u_wU_w^{-1}v_w=a_ww$. Let $U=\diag_w U_w$, let $u$ and $v$ be the concatenations of the $u_w$ and $v_w$, and put
+\[
+L=\begin{pmatrix}Q_{\le1}&-u\\ v&U\end{pmatrix}.
+\]
+For a tuple $Z$ of $n\times n$ matrices this is an $mn\times mn$ matrix of the form
+\begin{equation}\label{eq:pencil}
+L_n(Z)=K\otimes I_n+\sum_{i=1}^kB_i\otimes Z_i ,
+\end{equation}
+with $m=1+\sum_w(l_w-1)$ and fixed $K,B_1,\dots,B_k\in M_m(\C)$. (If $Q$ is affine, $L=Q$ and $m=1$.) The Schur complement of $U(Z)$ in $L_n(Z)$ is $Q(Z)$ and $\det U(Z)=1$, so
+\begin{equation}\label{eq:lin}
+\det L_n(Z)=\det Q(Z),\qquad \smin(Q(Z))\ge\smin(L_n(Z))
+\end{equation}
+for every tuple $Z$. For the inequality, if $L_n(Z)$ is invertible then so is $Q(Z)$, and $Q(Z)^{-1}$ is the upper left block of $L_n(Z)^{-1}$; otherwise both sides vanish. Note that $K$ itself is singular, since $Q(0)=0$.
+
+\section{\texorpdfstring{Sizes divisible by $d$}{Sizes divisible by d}}\label{sec:divisible}
+
+We use the following estimate of Collins, Kitagawa, Miyagawa, Yuan and Zhong.
+
+\begin{theorem}[{\cite[Theorem~3.4]{CKMYZ}}]\label{thm:ckmyz}
+Fix $m'\ge1$, matrices $R_1,\dots,R_{k'}\in M_{m'}(\C)$ and $\Lambda\ge0$. For $n\ge1$ let $G_1,\dots,G_{k'}$ be independent normalized complex Ginibre matrices of size $n$, and for deterministic $D_1,\dots,D_{k'}\in M_n(\C)$ with $\max_\ell\|D_\ell\|\le\Lambda$ put
+\[
+\mathcal T_D=I_{m'}\otimes I_n+\sum_{\ell=1}^{k'}R_\ell\otimes(G_\ell+D_\ell).
+\]
+There are $\eta=\eta(m')>0$, constants $C,c>0$ and an integer $n_0$, depending only on $R_1,\dots,R_{k'}$ and $\Lambda$, such that for all $n\ge n_0$, all such $D$ and all $t>0$,
+\[
+\Prob\{\smin(\mathcal T_D)\le t\}\le C\bigl(n^{\eta}t^{2/m'}+e^{-cn}\bigr).
+\]
+\end{theorem}
+
+No condition is imposed on the $R_\ell$; the identity term $I_{m'}\otimes I_n$ supplies the nondegeneracy.
+
+Fix, by \cref{lem:point}, a tuple $T$ of $d\times d$ matrices with $\det Q(T)\ne0$, and put $W=L_d(T)$, which is invertible by \eqref{eq:lin}.
+
+\begin{proposition}\label{prop:divisible}
+There are $\eta,c,C>0$ and $q_0$ such that, if $M=dq$ with $q\ge q_0$ and $Y_1,\dots,Y_k$ are independent normalized complex Ginibre matrices of size $M$, then with $\gamma=2/(md)$,
+\[
+\Prob\{\smin(L_M(Y))\le u\}\le C\bigl(M^{\eta}u^{\gamma}+e^{-cM}\bigr)\qquad(u>0).
+\]
+\end{proposition}
+
+\begin{proof}
+Write $\C^M=\C^d\otimes\C^q$ and $Y_i=\sum_{\mu,\nu=1}^dE_{\mu\nu}\otimes d^{-1/2}G_{i\mu\nu}$, where $E_{\mu\nu}$ are the matrix units of $M_d(\C)$. The $kd^2$ matrices $G_{i\mu\nu}$ are independent normalized complex Ginibre matrices of size $q$. Since $\sum_{\mu,\nu}(T_i)_{\mu\nu}E_{\mu\nu}=T_i$,
+\[
+L_M(Y)=W\otimes I_q+\sum_{i,\mu,\nu}(B_i\otimes E_{\mu\nu})\otimes\bigl(d^{-1/2}G_{i\mu\nu}-(T_i)_{\mu\nu}I_q\bigr),
+\]
+and therefore
+\[
+(W^{-1}\otimes I_q)L_M(Y)=I_{md}\otimes I_q+\sum_{i,\mu,\nu}R_{i\mu\nu}\otimes\bigl(G_{i\mu\nu}+D_{i\mu\nu}\bigr),\qquad R_{i\mu\nu}=d^{-1/2}W^{-1}(B_i\otimes E_{\mu\nu}),
+\]
+with deterministic means $D_{i\mu\nu}=-\sqrt d\,(T_i)_{\mu\nu}I_q$. \Cref{thm:ckmyz} applies with $m'=md$, the $k'=kd^2$ coefficients $R_{i\mu\nu}$, $n=q$ and $\Lambda=\sqrt d\max_{i,\mu,\nu}|(T_i)_{\mu\nu}|$, and gives $\Prob\{\smin((W^{-1}\otimes I_q)L_M(Y))\le u'\}\le C(q^{\eta}u'^{\gamma}+e^{-cq})$ for $q\ge q_0$, with $\eta=\eta(md)$. The matrix $W=L_d(T)$ takes the place of the linearization at a scalar point in \cite{CKMYZ}: it makes the coefficient of $I_q$ the identity. Since $\smin(L_M(Y))\ge\smin(W)\,\smin((W^{-1}\otimes I_q)L_M(Y))$, we take $u'=u/\smin(W)$ and use $q\le M$, $e^{-cq}=e^{-(c/d)M}$.
+\end{proof}
+
+\section{\texorpdfstring{A core of size divisible by $d$}{A core of size divisible by d}}\label{sec:variance}
+
+For $N$ large, let $s=d+(N\bmod d)$ and $M=N-s$, so that $d\le s\le 2d-1$ and $d\mid M$. Write each $X_i$ in blocks of sizes $M$ and $s$,
+\[
+X_i=\begin{pmatrix}X_i^{11}&X_i^{12}\\ X_i^{21}&X_i^{22}\end{pmatrix},
+\]
+and let $A=L_M(X^{11})$. We call $X^{11}$ the core and $X^{22}$ the corner, and the entries of $X^{12}$, $X^{21}$ and $X^{22}$ the border variables. The entries of $X^{11}_i$ have variance $1/N$ rather than $1/M$.
+
+\begin{lemma}\label{lem:core}
+There are $c,C>0$ such that for all large $N$ and all $u>0$,
+\[
+\Prob\{\smin(A)\le u\}\le C\bigl(N^{\eta/2}u^{\gamma/2}+e^{-cN}\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\rho$ be the density of the law of $X^{11}$ with respect to the law of $k$ independent normalized Ginibre matrices of size $M$. For a single complex entry $x$, with $r=N/M$, the ratio of the two densities is $r\,e^{-(N-M)|x|^2}$. Under the reference law $M|x|^2$ is exponential with mean one, so the second moment of this ratio is
+\[
+r^2\,\E\,e^{-2(r-1)M|x|^2}=\frac{r^2}{2r-1}=1+\frac{s^2}{M(M+2s)}.
+\]
+By independence over the $kM^2$ entries, $\E\rho^2\le\exp(ks^2M/(M+2s))\le e^{ks^2}$, which is bounded since $s\le2d-1$. By Cauchy--Schwarz, $\Prob\{\smin(A)\le u\}\le(\E\rho^2)^{1/2}\,\Prob_{\mathrm{ref}}\{\smin(L_M(Y))\le u\}^{1/2}$, and \cref{prop:divisible} with $N/2\le M\le N$ gives the claim.
+\end{proof}
+
+\section{The border}\label{sec:border}
+
+Order the coordinates of $\C^m\otimes\C^N$ so that those of $\C^m\otimes\C^M$ come first. Since $K\otimes I_N$ is block diagonal for this splitting,
+\[
+L_N(X)=\begin{pmatrix}A&B\\ C_1&E\end{pmatrix},\qquad B=\sum_iB_i\otimes X_i^{12},\quad C_1=\sum_iB_i\otimes X_i^{21},\quad E=L_s(X^{22}).
+\]
+The four families $X^{11},X^{12},X^{21},X^{22}$ are independent, $B$ and $C_1$ are linear in the entries of $X^{12}$ and $X^{21}$ with no constant term, and $X^{22}=N^{-1/2}Z$ where $Z$ has independent standard complex Gaussian entries. By \cref{lem:point} and \eqref{eq:lin}, $A$ is invertible almost surely; on that event put
+\[
+S_0=E-C_1A^{-1}B,\qquad F=\det S_0 ,
+\]
+an $h\times h$ determinant with $h=ms\le H:=m(2d-1)$, and $\det L_N(X)=\det A\cdot F$.
+
+\begin{lemma}\label{lem:border}
+There is $C>0$ such that for all large $N$ and $0<v\le1$,
+\[
+\Prob\{|F|\le v,\ A\text{ invertible}\}\le CN^{1/4}v^{1/(2H)} .
+\]
+\end{lemma}
+
+\begin{proof}
+Condition on $X^{11}$ with $A$ invertible. Each entry of $S_0$ is a polynomial of degree at most $2$ in the entries of $X^{12},X^{21},Z$, with no complex conjugates, so $F$ is a holomorphic polynomial of degree at most $2h$ in these variables. A holomorphic monomial that contains an entry $g$ of $X^{12}$ or $X^{21}$ to a positive power has mean zero, since the law of $g$ is invariant under $g\mapsto e^{i\theta}g$. Removing these monomials sets $X^{12}=X^{21}=0$, so
+\[
+\E[F\mid X^{11},Z]=\det E=\det L_s(N^{-1/2}Z)=g_s(N^{-1/2}Z),\qquad g_s(Z):=\det Q(Z),
+\]
+using \eqref{eq:lin}. The conditional expectation is an integral of a polynomial against a Gaussian law with $A$ fixed, so no moment of $A^{-1}$ is involved. By \cref{lem:point} with $s\ge d$, $g_s=\sum_\alpha c_\alpha Z^\alpha$ is a nonzero polynomial of degree at most $ds\le h$. Holomorphic monomials are orthogonal under the standard complex Gaussian law, with $\E|Z^\alpha|^2=\alpha!$, so
+\[
+\E|g_s(N^{-1/2}Z)|^2=\sum_\alpha|c_\alpha|^2\alpha!\,N^{-|\alpha|}\ge c_*N^{-h},
+\]
+where $c_*>0$ is the minimum over the finitely many values of $s$ of $|c_\alpha|^2\alpha!$ for a fixed nonzero coefficient. By Jensen's inequality in $X^{12},X^{21}$,
+\[
+\E[|F|^2\mid X^{11}]\ge\E_Z|g_s(N^{-1/2}Z)|^2\ge c_*N^{-h}.
+\]
+Now $Y=|F|^2$ is a real polynomial of degree at most $D=4h$ in the real and imaginary parts of the border variables, whose law is a standard Gaussian, hence log-concave. The Carbery--Wright inequality \cite[Theorem~8]{CW}, with exponent $q=D$, gives $\Prob\{Y\le x\}\le C_0D\,(x/\E Y)^{1/D}$ for $x>0$, with an absolute constant $C_0$. The bound does not depend on the number of variables, which grows linearly in $N$. With $x=v^2$ this yields, uniformly in $X^{11}$,
+\[
+\Prob\{|F|\le v\mid X^{11}\}\le 4C_0h\,c_*^{-1/(4h)}N^{1/4}v^{1/(2h)}\le CN^{1/4}v^{1/(2H)}\qquad(0<v\le1),
+\]
+since $h\le H$ takes finitely many values. Integrating over $X^{11}$ proves the lemma.
+\end{proof}
+
+\begin{remark}\label{rem:adjoints}
+Two features of the setting enter here. If $P$ contained adjoints $x_i^*$, then $F$ would contain monomials $g\bar g$ with nonzero mean, and the conditional mean would no longer reduce to $\det E$. If $s<d$, the polynomial $g_s$ could vanish identically: for $Q=x_1x_2-x_2x_1$ and $s=1$, $g_1=0$, and then the lower bound on $\E|F|^2$ fails. The choice $d\le s\le2d-1$ keeps $g_s\ne0$ and $s$ bounded.
+\end{remark}
+
+\section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
+
+Let $\Omega=\{\max_i\|X_i\|\le8\}$. For fixed unit vectors $x,y\in\C^N$, $y^*X_ix$ is a centred circular Gaussian of variance $1/N$, so $\Prob\{|y^*X_ix|>4\}=e^{-16N}$. A $1/4$-net of the unit sphere of $\C^N$ has at most $9^{2N}$ points, and $\|X_i\|$ is at most twice the maximum of $|y^*X_ix|$ over pairs from two such nets. A union bound gives $\Prob(\Omega^c)\le k\,9^{4N}e^{-16N}\le e^{-cN}$. On $\Omega$, the blocks $B,C_1,E$ are compressions of $L_N(X)$, so their norms are at most $K_0:=\|K\|+8\sum_i\|B_i\|$.
+
+Suppose that $\Omega$ holds, that $\smin(A)>u$ and that $|F|>v$, where $0<u,v\le1$. Then $\|A^{-1}\|<u^{-1}$ and $\|S_0\|\le K_0+K_0^2u^{-1}\le C u^{-1}$. Bounding the least singular value of $S_0$ through the product of its singular values,
+\[
+\|S_0^{-1}\|\le\frac{\|S_0\|^{h-1}}{|\det S_0|}\le Cu^{-(h-1)}v^{-1}.
+\]
+By block inversion,
+\[
+L_N^{-1}=\begin{pmatrix}A^{-1}&0\\0&0\end{pmatrix}+\begin{pmatrix}-A^{-1}B\\ I\end{pmatrix}S_0^{-1}\begin{pmatrix}-C_1A^{-1}&I\end{pmatrix},
+\]
+so $\|L_N^{-1}\|\le Cu^{-(H+1)}v^{-1}$, with $C$ uniform since $h$ takes finitely many values.
+
+Let $0<t<1$ and take $u=t^{1/(4(H+1))}$ and $v=t^{1/2}$. Then $\|L_N^{-1}\|\le Ct^{-3/4}<t^{-1}$ once $t<t_0:=C^{-4}$. By \eqref{eq:lin} and the above, for $t<t_0$,
+\[
+\{\smin(Q(X))\le t\}\subseteq\Omega^c\cup\{\smin(A)\le u\}\cup\{|F|\le v,\ A\text{ invertible}\}\cup\{A\text{ singular}\},
+\]
+and the last event is null. \Cref{lem:core,lem:border} give
+\[
+\Prob\{\smin(Q(X))\le t\}\le e^{-cN}+C\bigl(N^{\eta/2}t^{\gamma/(8(H+1))}+e^{-cN}\bigr)+CN^{1/4}t^{1/(4H)} ,
+\]
+which is \eqref{eq:main} with $b=\min\{\gamma/(8(H+1)),1/(4H)\}=1/(4md(H+1))$ and $\kappa=\max\{\eta/2,1/4\}$. For $t\ge t_0$, \eqref{eq:main} holds after enlarging $C$ so that $Ct_0^b\ge1$. \qed
+
+
+\section*{Acknowledgments and funding}
+
+The research presented in this paper was supported by the European Research Council (ERC) under the European Union's Horizon Europe research and innovation programme (grant agreement No.\ 101041711). It was also supported by the Simons Foundation, by Heights Labs, by Convex Nexus Capital, and by the Israel Science Foundation (grants 2258/19 and 4101/25).
+
+This work was done by multiple AI agents, Claude (Anthropic) and Codex (OpenAI), connected to Math Brain~\cite{MathBrainRepo} and working together inside the Brain framework~\cite{BrainFramework}, a shared, persistent memory in which the agents record claims, proofs, failed attempts and methods, retrieve one another's results, coordinate who works on what, and audit each other's work. The method is described in~\cite{MathBrainPaper}.
+
+\section*{Declaration of generative AI and AI-assisted technologies}
+
+This paper is part of a broader research project on proving open problems with AI systems. The use of the matrix point as the base of the linearization, the border argument and the proof were found with Codex (OpenAI), and the text was drafted with Claude (Anthropic), both working under the author's direction. The proof rests on results of the mathematicians cited: the question and the estimate away from the constant term of Han \cite{Han1}, the linearization and the structured-mean estimate of Collins, Kitagawa, Miyagawa, Yuan and Zhong \cite{CKMYZ}, the quadratic case of Cook, Guionnet and Husson \cite{CGH}, and the small-ball inequality of Carbery and Wright \cite{CW}. The author directed the work and is responsible for the content of the paper and for decisions concerning its dissemination.
+
+\section*{Data availability}
+
+No datasets were generated or analysed.
+
+\section*{Declaration of competing interest}
+
+The author holds equity in Heights Labs and Convex Nexus Capital and has a management role at Convex Nexus Capital.
+
+\begin{thebibliography}{99}
+
+\bibitem{Ar}
+M.~Artin,
+\emph{Noncommutative rings},
+lecture notes, University of California, Berkeley, 1999,
+\url{https://math.mit.edu/~etingof/artinnotes.pdf}.
+
+\bibitem{CW}
+A.~Carbery and J.~Wright,
+Distributional and $L^q$ norm inequalities for polynomials over convex bodies in $\mathbb R^n$,
+\emph{Math. Res. Lett.} \textbf{8} (2001), 233--248,
+\href{https://doi.org/10.4310/MRL.2001.v8.n3.a1}{doi:10.4310/MRL.2001.v8.n3.a1}.
+
+\bibitem{CKMYZ}
+B.~Collins, Y.~Kitagawa, A.~Miyagawa, W.~Yuan and P.~Zhong,
+Brown measures and spectral convergence for arbitrary GUE polynomials,
+arXiv:2611.12785v1 (2026).
+
+\bibitem{CGH}
+N.~A.~Cook, A.~Guionnet and J.~Husson,
+Spectrum and pseudospectrum for quadratic polynomials in Ginibre matrices,
+\emph{Ann. Inst. Henri Poincar\'e Probab. Stat.} \textbf{58} (2022), no.~4, 2284--2320,
+\href{https://doi.org/10.1214/21-AIHP1225}{doi:10.1214/21-AIHP1225}.
+
+\bibitem{Ed}
+A.~Edelman,
+Eigenvalues and condition numbers of random matrices,
+\emph{SIAM J. Matrix Anal. Appl.} \textbf{9} (1988), 543--560,
+\href{https://doi.org/10.1137/0609045}{doi:10.1137/0609045}.
+
+\bibitem{Han1}
+Y.~Han,
+Brown measure convergence for the spectrum of polynomials in Ginibre matrices,
+arXiv:2606.01664 (2026).
+
+\bibitem{Han2}
+Y.~Han,
+Universality of Brown measure convergence for non-Gaussian matrix polynomials with adjoints,
+arXiv:2611.20657 (2026).
+
+\bibitem{RV}
+M.~Rudelson and R.~Vershynin,
+The Littlewood--Offord problem and invertibility of random matrices,
+\emph{Adv. Math.} \textbf{218} (2008), 600--633,
+\href{https://doi.org/10.1016/j.aim.2008.01.010}{doi:10.1016/j.aim.2008.01.010}.
+
+\bibitem{Sn}
+P.~\'Sniady,
+Random regularization of Brown spectral measure,
+\emph{J. Funct. Anal.} \textbf{193} (2002), 291--313,
+\href{https://doi.org/10.1006/jfan.2001.3935}{doi:10.1006/jfan.2001.3935}.
+
+\bibitem{MathBrainRepo} Y.~Shmalo, \emph{Math Brain: public snapshot, code and tests}, 2026, \url{https://github.com/yspennstate/math-brain-public}.
+
+\bibitem{MathBrainPaper} Y.~Shmalo, \emph{Math Brain: shared, auditable memory for multi-agent mathematical research}, October 2026, \url{https://github.com/yspennstate/math-brain-public/tree/main/papers/math-brain-2026-10-24}.
+
+\bibitem{BrainFramework} Y.~Shmalo, \emph{Brain Framework}, public software repository, 2026, \url{https://github.com/yspennstate/brain-framework-public}.
+
+\end{thebibliography}
+
+\end{document}
